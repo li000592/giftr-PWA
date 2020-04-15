@@ -1,0 +1,57 @@
+    // if(method == "GET"){
+    //   app.req = new Request(url, {
+    //     headers: headers,
+    //     mode: 'cors',
+    //     method: method,
+    //   });
+    // }else{
+    //   app.req = new Request(url, {
+    //     headers: headers,
+    //     body: body,
+    //     mode: 'cors',
+    //     method: method,
+    //   });
+    // }
+
+         
+      // let headers = new Headers(); 
+      // headers.append('X-Made-By-Steve', 'true');
+      // headers.append('Content-Type', 'application/json');
+      // let req = new Request(url, {
+      //   headers: headers,
+      //   body: JSON.stringify(data),
+      //   mode: 'cors',
+      //   method: 'POST'
+      // });
+
+      // fetch(req)
+      //   .then(resp => resp.json())
+      //   .then(data => {
+      //     console.log(data)
+      //     let token = JSON.stringify(data.data.token);
+
+      //     console.log(token);
+      //     sessionStorage.setItem(app.tokensKey, token);
+      //     //use any name you want for the key
+      //     app.tokens = true;
+      //     app.init();
+      //   })
+      //   .then(data => { 
+      //     M.toast({html: 'Login success!'});
+      //   })
+      //   .catch(console.error);
+    
+      // document.getElementById("loading").classList.remove("hidden");
+      // setTimeout(() => {
+      //   document.getElementById("loading").classList.add("hidden");
+      //   app.modal.close();
+      // }, 3000);
+      
+
+               <div class="input-field col s12">
+            <i class="material-icons prefix">date_range</i>
+            <!-- <input  type="text" class="datepicker" /> -->
+            <input id="birthday-input" type="text" class="datepicker">
+            <!-- <input type="date" id="birthday-input" class="autocomplete"> -->
+            <label for="birthday">Birthday</label>
+          </div>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"  />
+    <!-- Access-Control-Allow-Origin * -->
+    <title>Giftr-gifts</title>
+    <!-- Compiled and minified CSS -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="../css/app.css" />
+    
+    <!-- pwa manifest and android support -->
+    <link rel="manifest" href="../manifest.json" />
+    <meta name="theme-color" content="#fa79a7" />
+    <!-- ios support -->
+    <link rel="apple-touch-icon" href="../img/icon-96x96.png" />
+    <meta name="apple-mobile-web-app-status-bar" content="#fa79a7" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <div class="navbar-fixed" id="navbar"><!-- nav bar -->
+        <nav role="navigation">
+          <div class="nav-wrapper">
+            <a  href="../index.html" class="left"><i class="material-icons prefix back-btn">arrow_back</i></sa>
+            <a href="#" class="brand-logo"><img id="giftr-icon" src="../img/icon-192x192.png" alt=""><span id="logo-text">Giftr</span></a>
+            <!-- <h4 class="nav-mobile left">Giftr</h4> -->
+            <ul id="nav-mobile" class="right">
+              <li id="logOut" ><a href="../index.html">logOut</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+   
+    <main class="unlogin center">
+      <h5 class="center"><span class="personNam green-text text-lighten-2">Howard</span>'s Wish List</h5>
+      <ul class="card-list">
+
+
+
+      </ul>
+    </main>  
+    <div id="my-modal" class="modal">
+     
+    </div>
+
+    <div id="fab-gift" class="fixed-action-btn"><!-- fab button -->
+      <a  class="btn-floating btn-large waves-effect waves-light btn btn-floating #00bfa5 teal accent-4 modal-trigger" href="#fab">
+        <i class="large material-icons">add</i>
+      </a>
+    </div>
+
+    <div id="loading" class="progress hidden">
+      <div class="indeterminate"></div>
+  </div>
+
+    <script defer src="../js/app.js"></script>
+    
+    <!-- Template -->
+    <template id= "noInfoTemplate">
+
+      <h4 class="center-align">Your <span id="peronName">Wayne</span>'s washlist</h4>
+      <p class="center-align">
+        Using add button to create new stuff!
+      </p>
+
+  </template>
+    <template id= "cardTemplate">
+      <li>
+        <div class="card gift-card">
+          <!-- <span class="lastTimeEd right grey-text">Edit: <span>05/28/2019</span></span> -->
+          <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4"><i class="left material-icons prefix">card_giftcard</i><span class="goodsName">Pixel 4</span>           
+              <i class="material-icons right">more_vert</i></span>
+
+            <p><span class="price left" ><i class="material-icons prefix left">attach_money</i><span class="priceNum">270</span></span><a href="#!" class="right text-white"
+              ><i
+                class="Tiny circle teal.darken-3 material-icons del-gifts accent-4 gift-btn"
+                title="delete gifts"
+                >delete</i
+              ></a
+            >
+            </p>
+          </div>
+          <div class="card-reveal blue-grey lighten-5">
+            <span class="card-title grey-text text-darken-4"><i class="material-icons">store</i><span class="storeName">Best buy</span> <i class="material-icons right">close</i></span>
+            <p>
+              <i class="material-icons">http</i>
+              <a class="webLink" href="google.ca">bestbuy.ca</a>
+            </p>
+          </div>
+        </div>
+      </li>
+    </template>
+ 
+    <template id="addGiftsTemplate">
+      <div class="card z-depth-0">
+        <div class="card-content ">
+          <span class="card-title center-align">Add the Gift</span>
+
+          <div class="input-field col s12">
+            <i class="material-icons prefix">card_giftcard</i>
+              <input id="gift-input" type="email" class="validate">
+              <label for="gift-input">Gift</label>
+          </div>
+ 
+          <div class="input-field col s12">
+            <i class="material-icons prefix">attach_money</i>
+            <input id="price-input" type="text" class="datepicker" />
+            <label for="price-input">Price</label>
+          </div>
+          <div class="input-field col s12">
+            <i class="material-icons prefix">store</i>
+            <input id="store-input" type="text" class="datepicker" />
+            <label for="store-input">Store</label>
+          </div>
+          <div class="input-field col s12">
+            <i class="material-icons prefix">http</i>
+            <input id="website-input" type="text" class="datepicker" />
+            <label for="website-input">Website</label>
+          </div>
+          <div class="buttons ">
+            <a id="cancel-btn" class="waves-effect waves-light btn-large ">CANCEL</a>
+            <a id="addGifts-btn" class="waves-effect waves-light btn-large ">CONTINUE</a>
+          </div>
+          
+        </div>
+      </div>
+    </template>
+  </body>
+</html>

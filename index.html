@@ -2,62 +2,177 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"  />
+    <!-- Access-Control-Allow-Origin * -->
     <title>Giftr</title>
     <!-- Compiled and minified CSS -->
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     />
     <link rel="stylesheet" href="./css/app.css" />
+    
     <!-- pwa manifest and android support -->
     <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#fa79a7" />
     <!-- ios support -->
     <link rel="apple-touch-icon" href="/img/icon-96x96.png" />
     <meta name="apple-mobile-web-app-status-bar" content="#fa79a7" />
-  </head>
-  <body>
-    <div class="navbar-fixed">
-      <nav>
-        <div class="nav-wrapper">
-          <a href="/">HOME</a> | <a href="nowhere.html">NOT AVAILABLE</a>
-        </div>
-      </nav>
-    </div>
-    <main>
-      <h1>Main Heading <img src="img/offline.png" alt="app offline" /></h1>
-      <p>
-        <i class="material-icons">assignment_ind</i>
-        Optio harum minus quos, rem nulla, soluta nam adipisci in pariatur,
-        ipsam voluptatem expedita esse? Harum repellendus aperiam, consequatur
-        amet, quisquam earum odit minus maiores qui quae veniam cum magni.
-      </p>
-      <p>
-        <img
-          id="randImg"
-          src="//picsum.photos/id/235/300/300"
-          alt="random sample image"
-        />
-        Libero tempore incidunt labore, perferendis omnis eum iusto ad nemo est
-        dolor obcaecati unde dolore aspernatur in nulla corporis dicta earum
-        eos. Officia error voluptatibus blanditiis, dolorum eveniet laborum
-        esse?
-      </p>
-      <p>
-        Voluptatem iure, pariatur reiciendis magni distinctio sunt corrupti
-        minus ex modi nulla quis! Assumenda distinctio dolore temporibus nostrum
-        culpa aspernatur ut quibusdam accusamus est! Id quae sed cum quia
-        explicabo?
-      </p>
-    </main>
-    <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </head>
 
-    <script src="./js/app.js"></script>
+  <body>
+    <header>
+      <div class="navbar-fixed" id="navbar"><!-- nav bar -->
+        <nav role="navigation">
+          <div class="nav-wrapper">
+            
+            <a href="#" class="brand-logo"><img id="giftr-icon" src="./img/icon-192x192.png" alt=""><span id="logo-text">Giftr</span></a>
+            <!-- <h4 class="nav-mobile left">Giftr</h4> -->
+            <ul id="nav-mobile" class="right">
+              <li id="register"><a href="#Register">Register</a></li>
+              <li id="login"><a href="#Login">Login</a></li>
+              <li id="logOut" class="hidden"><a href="#logOut">logOut</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+   
+    <main class="unlogin">
+
+        <!-- <ul class="card-list collection">
+
+        </ul> -->
+
+    </main>
+    
+    <div id="sidebar" class="sidenav"><!-- side nav -->
+    </div>
+    
+    <div id="my-modal" class="modal">
+     
+    </div>
+    <div id="fab" class="fixed-action-btn"><!-- fab button -->
+      <a  class="btn-floating btn-large waves-effect waves-light btn btn-floating #00bfa5 teal accent-4 modal-trigger" href="#fab">
+        <i class="large material-icons">add</i>
+      </a>
+    </div>
+    <div id="loading" class="progress hidden">
+      <div class="indeterminate"></div>
+  </div>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+    <!-- <script src="./js/app.js"></script> -->
+    <script defer src="./js/app.js"></script>
+    
+    <!-- Template -->
+    <template id="registerFormTemplate">
+      <div class="card z-depth-0">
+        <div class="card-content ">
+          <span class="card-title center-align">Create an account</span>
+
+          <div class="input-field col s12">
+            <i class="material-icons prefix">person</i>
+              <input id="email-input" type="email" class="validate">
+              <label for="email-input">Email</label>
+              <span class="helper-text" data-error="wrong" data-success="right"></span>
+          </div>
+
+          <div class="input-field col s12">
+            <i class="material-icons prefix">lock_outline</i>
+            <input type="password" id="password-input" class="autocomplete">
+            <label for="password-input">Password</label>
+          </div>
+          <div class="buttons ">
+            <a id="cancel-btn" class="waves-effect waves-light btn-large ">CANCEL</a>
+            <a id="register-btn" class="waves-effect waves-light btn-large ">CONTINUE</a>
+          </div>
+          <p class="center">Already has account? <span id="subLogin" class="pink-text text-lighten-2">LOG IN</span></p>
+        </div>
+      </div>
+    </template>
+
+    <template id= "loginFormTemplate">
+      <div class="card z-depth-0">
+        <div class="card-content ">
+          <span class="card-title center-align">Log in to Giftr</span>
+
+          <div class="input-field col s12">
+            <i class="material-icons prefix">person</i>
+              <input id="email-input" type="email" class="validate">
+              <label for="email-input">Email</label>
+              <span class="helper-text" data-error="wrong" data-success="right"></span>
+          </div>
+          <div class="input-field col s12">
+            <i class="material-icons prefix">lock_outline</i>
+            <input type="password" id="password-input" class="autocomplete">
+            <label for="password-input">Password</label>
+          </div>
+          <div class="buttons ">
+            <a id="cancel-btn" class="waves-effect waves-light btn-large ">CANCEL</a>
+            <a id="login-btn" class="waves-effect waves-light btn-large ">CONTINUE</a>
+          </div>
+          
+        </div>
+      </div>
+    </template>
+
+    <template id= "cardTemplate">
+      <li class="collection-item person-card">
+        <i class="material-icons prefix">face</i>
+        <span class="title flow-text person-name">Lil Wayne</span>
+        <p >
+          <i class="material-icons prefix">cake</i>
+          <span class="birthday" >1980-10-10</span>
+          <a href="#!" class="right text-white"
+            ><i
+              class="Tiny circle teal.darken-3 material-icons del-person accent-4"
+              title="delete person"
+              >delete</i
+            ><a class="gift-btn right" href="./pages/gift.html"><i
+              class="Tiny circle teal.darken-3 material-icons show-gifts teal "
+              title="view gifts"
+              >card_giftcard</i
+            ></a></a
+          >
+        </p>
+      </li>
+    </template>
+    <template id= "noInfoTemplate">
+
+        <h4 class="center-align">Welcome to Giftr</h4>
+        <p class="center-align">Remind your friends' birthday and wishlist. If you login, you would see the friend details here</p>
+
+     
+    </template>
+    <template id="addPersonTemplate">
+      <div class="card z-depth-0">
+        <div class="card-content ">
+          <span class="card-title center-align">Add your friends to Giftr</span>
+
+          <div class="input-field col s12">
+            <i class="material-icons prefix">face</i>
+              <input id="name-input" type="email" class="validate">
+              <label for="name-input">Name</label>
+          </div>
+ 
+          <div class="input-field col s12">
+            <i class="material-icons prefix">date_range</i>
+            <input id="birthday-input" type="text" class="datepicker" />
+            <label for="birthday-input">Birthday</label>
+          </div>
+          <div class="buttons ">
+            <a id="cancel-btn" class="waves-effect waves-light btn-large ">CANCEL</a>
+            <a id="addPerson-btn" class="waves-effect waves-light btn-large ">CONTINUE</a>
+          </div>
+          
+        </div>
+      </div>
+    </template>
   </body>
 </html>
