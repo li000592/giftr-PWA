@@ -53,7 +53,9 @@ const app = {
       main.appendChild(div);
         
     }else{
+      console.log("HIdenn login")
       if(page == "Giftr-gifts"){return}
+      
       document.getElementById("register1").classList.add("hidden");
       document.getElementById("login").classList.add("hidden");
       let logOut= document.getElementById("logOut");
