@@ -55,3 +55,23 @@
             <!-- <input type="date" id="birthday-input" class="autocomplete"> -->
             <label for="birthday">Birthday</label>
           </div>
+
+
+                  <li class="collection-item person-card">
+          <i class="material-icons prefix">card_giftcard</i>
+          <span class="title flow-text person-name">Lil Wayne</span>
+          <p >
+            <i class="material-icons prefix">attach_money</i>
+            <span class="birthday" >10</span>
+
+            <a href="#!" class="right text-white"
+              ><i
+                class="Tiny circle teal.darken-3 material-icons del-person accent-4 gift-btn"
+                title="delete person"
+                >delete</i
+              ></a
+            >
+          </p>
+          <i class="material-icons prefix">store</i>
+          <span class="birthday" >Store</span>
+        </li>

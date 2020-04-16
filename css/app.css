@@ -59,11 +59,11 @@ p > img {
 p {
   padding: 1rem 0;
 }
-@media all and (display-mode: standalone) {
+/* @media all and (display-mode: standalone) {
   body {
-    /* background-color: lightskyblue; */
+    background-color: lightskyblue;
   }
-}
+} */
 
 @media (max-width: 700px){
   /* body{

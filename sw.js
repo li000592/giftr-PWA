@@ -1,10 +1,11 @@
 'use strict';
-let staticName = `static-cache-12`;
-let dynamicName = 'dynamic-cache-4';
+let staticName = `static-cache-1`;
+let dynamicName = 'dynamic-cache-2';
 let listOfStaticFiles = [
   '/',
   '/index.html',
-  '/404.html',
+  '/pages/gift.html',
+  '/pages/404.html',
   '/css/app.css',
   '/js/app.js',
   '/favicon.ico',

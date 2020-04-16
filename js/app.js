@@ -19,17 +19,26 @@ const app = {
   req: null,
   url: "https://giftr.mad9124.rocks",
   init: () => {
+        if ('serviceWorker' in navigator) {
+
+      app.initServiceWorker().catch(console.error);
+      // document.getElementById('randImg').addEventListener('click', app.setImg);
+    }
     let main = document.querySelector("main");
 
     let page = document.querySelector("title").textContent;
 
     if(page == "Giftr"){
       app.page = "index";
-      main.textContent = "";
+      // main.textContent = "";
       console.log("INDEX PAGE NOW"); 
       if(app.tokens){
         app.login = true;
         app.getPeople();
+        document.getElementById("register").classList.add("hidden");
+        document.getElementById("login").classList.add("hidden");
+        let logOut= document.getElementById("logOut");
+        logOut.classList.remove("hidden");
       }
     }else if ( page == "Giftr-gifts"){
       app.page = "gifts";
@@ -39,10 +48,7 @@ const app = {
       app.modalSetup();
       
     }
-    // if ('serviceWorker' in navigator) {
-    //   app.initServiceWorker().catch(console.error);
-    //   document.getElementById('randImg').addEventListener('click', app.setImg);
-    // }
+
 
     
     if(app.login == false){
@@ -170,9 +176,9 @@ const app = {
     M.toast({html: 'logOut success!'});
     app.tokens = null;
     app.login = false;
-    JSON.parse(sessionStorage.setItem(app.tokensKeym, "NOT IN LOG"));
+    sessionStorage.setItem(app.tokensKey, "NOT IN LOG");
     app.init();
-    document.getElementById("register1").classList.remove("hidden");
+    document.getElementById("register").classList.remove("hidden");
     document.getElementById("login").classList.remove("hidden");
     document.getElementById("logOut").classList.add("hidden");
     
@@ -207,7 +213,12 @@ const app = {
   },
   LoginForm : ev=>{
     ev.preventDefault();
+    console.log(ev)
     let tar = ev.target.text;
+    if(tar == undefined){
+      tar = ev.target.innerText;
+      console.log("TAR",tar)
+    }
     let template;
     console.log(tar)
     if(tar == "logOut"){
@@ -216,7 +227,7 @@ const app = {
     }
     if(tar == "Login"){
         template = document.getElementById('loginFormTemplate');
-    }else if(tar =="Register"){
+    }else if(tar =="Register" || tar =="Sign Up"){
         template = document.getElementById("registerFormTemplate");
     }
 
@@ -233,8 +244,18 @@ const app = {
     })
     if(tar == "Login"){
       document.getElementById("login-btn").addEventListener("click", app.goLogin);
+      document.querySelector(".sub-signup-btn").addEventListener("click", ev=>{
+        console.log(ev)
+        app.modal.close();
+        app.LoginForm(ev);
+      })
     }else{ 
       document.getElementById("register-btn").addEventListener("click", app.register);
+      document.querySelector(".sub-login-btn").addEventListener("click", ev=>{
+        console.log(ev)
+        app.modal.close();
+        app.LoginForm(ev);
+      })
       // document.getElementById("subLogin").addEventListener("click", ()=>)
     }
     
@@ -272,7 +293,8 @@ const app = {
         })
         .then(data => { 
           M.toast({html: 'registration success!'});
-          document.getElementById("loading").classList.add("hidden");
+          document.getElementById("loading").classList.add("hidden");    
+          app.goLogin(email, password);
           app.modal.close();
         })
         .catch((error) => {
@@ -337,7 +359,6 @@ const app = {
         main.textContent = "Your list is empty now. It's time to add your folks!"
       }
       else{
-        
         let cardList = document.createElement("ul");
         cardList.setAttribute("class", "card-list collection");
         main.appendChild(cardList);
@@ -375,15 +396,20 @@ const app = {
 
     // });
   },
-  goLogin:()=>{
-    let email = document.getElementById("email-input").value;
-    let password = document.getElementById("password-input").value;
-
+  goLogin:(email, password)=>{
+    // let email;
+    // let password;
+    
+    if(document.getElementById("email-input").value){
+      email = document.getElementById("email-input").value;
+      password = document.getElementById("password-input").value;
+    }
+    console.log(email, password)
     if(email !== "" &&  password !== ""){
       let url = app.url + path.tokens;
       let data = {
-        email: "li1@123.com",
-        password: "123"
+        email: email,
+        password: password
       };
       let method = "POST";
       let body = JSON.stringify(data)
@@ -495,9 +521,9 @@ const app = {
     fetch(app.apiMiddleware(url, method))
     .then(resp=>{
       console.log(resp);
-      M.toast({html: 'Delete pesron success!'});
-      document.getElementById("loading").classList.add("hidden");
+      M.toast({html: 'Delete pesron success!'});  
       app.init();
+      document.getElementById("loading").classList.add("hidden");
 
     })
     .catch(console.error)
@@ -510,7 +536,7 @@ const app = {
     JSON.parse(sessionStorage.setItem(app.personKey, id));   
   },
   initServiceWorker: async () => {
-    let swRegistration = await navigator.serviceWorker.register('/sw.js', {
+    let swRegistration = await navigator.serviceWorker.register('../sw.js', {
       updateViaCache: 'none',
       scope: '/',
     });
