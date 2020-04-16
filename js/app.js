@@ -14,7 +14,7 @@ const app = {
   modal: null,
   login: false,
   tokensKey: "彳亍",
-  personKey: "奶屁",
+  personKey: "kk",
   tokens: null,
   req: null,
   url: "https://giftr.mad9124.rocks",
@@ -24,6 +24,27 @@ const app = {
       app.initServiceWorker().catch(console.error);
       // document.getElementById('randImg').addEventListener('click', app.setImg);
     }
+    //get the starting value
+    let isOnline = 'onLine' in navigator && navigator.onLine;
+
+    window.addEventListener(
+      'online',
+      function online() {
+        M.toast({html: 'ONLINE NOW'})
+        // document.body.classList.add('hidden');
+        isOnline = true;
+      },
+      false
+    );
+    window.addEventListener(
+      'offline',
+      function offline() {
+        M.toast({html: 'NO INTERNET NOW'})
+        document.body.classList.remove('hidden');
+        isOnline = false;
+      },
+      false
+    );
     let main = document.querySelector("main");
 
     let page = document.querySelector("title").textContent;
@@ -167,7 +188,7 @@ const app = {
       console.log(resp);
       M.toast({html: 'Delete this gift success!'});
       document.getElementById("loading").classList.add("hidden");
-      app.init();
+      app.getGifts();
 
     })
     .catch(console.error)
@@ -177,10 +198,11 @@ const app = {
     app.tokens = null;
     app.login = false;
     sessionStorage.setItem(app.tokensKey, "NOT IN LOG");
-    app.init();
+    app.getPeople();
     document.getElementById("register").classList.remove("hidden");
     document.getElementById("login").classList.remove("hidden");
     document.getElementById("logOut").classList.add("hidden");
+    document.querySelector("main").textContent = "";
     
   },
   addEventListener:()=>{
@@ -321,8 +343,9 @@ const app = {
       let token = JSON.parse(sessionStorage.getItem(app.tokensKey));
       headers.append('Authorization', `Bearer ${token}`);
     }
-    headers.append('X-Made-By-Steve', 'true');
+    if(method !== "GET" && method !== "DELETE"){
     headers.append('Content-Type', 'application/json');
+    }
     
     let opt = {
       method: method,
@@ -336,7 +359,7 @@ const app = {
   },
  getPeople:(data)=>{
    
-    
+    app.token = sessionStorage.getItem(app.tokensKey);
     let peopleData;
     let method = "GET";
     let url = app.url + path.people;
@@ -344,14 +367,10 @@ const app = {
     fetch(app.apiMiddleware(url, method))
     // .then(console.log)
     .then(resp => resp.json())
-    .then(data)
     .then(data=>{
-      console.log(data)
-      peopleData = data.data
-      console.log(peopleData)
-    })
-    .then(()=>{
-      console.log("DATA", peopleData);
+      console.log("DATA", data.data);
+      peopleData = data.data;
+
       let main = document.querySelector("main")
       main.textContent = "";
       if(peopleData.length == 0){
@@ -431,7 +450,12 @@ const app = {
         console.log(token);
         sessionStorage.setItem(app.tokensKey, token);
         app.tokens = true;
-        app.init();
+        app.login = true;
+        app.getPeople();
+        document.getElementById("register").classList.add("hidden");
+        document.getElementById("login").classList.add("hidden");
+        let logOut= document.getElementById("logOut");
+        logOut.classList.remove("hidden");
         document.getElementById("loading").classList.add("hidden");
       })
       .then(data => { 
@@ -494,7 +518,7 @@ const app = {
       }
     })
     .then(()=>{
-      app.init();
+      app.getPeople();
       app.modal.close();
       M.toast({html: 'Add pesron success!'});
       document.getElementById("loading").classList.add("hidden");
@@ -522,7 +546,7 @@ const app = {
     .then(resp=>{
       console.log(resp);
       M.toast({html: 'Delete pesron success!'});  
-      app.init();
+      app.getPeople();
       document.getElementById("loading").classList.add("hidden");
 
     })
@@ -601,7 +625,7 @@ const app = {
       }
     })
     .then(()=>{
-      app.init();
+      app.getGifts();
       app.modal.close();
       M.toast({html: 'Add gift success!'});
       document.getElementById("loading").classList.add("hidden");
@@ -619,8 +643,8 @@ const app = {
   onMessage: (ev) => {
     //message from SW received
     let { data } = ev;
-    console.log(ev.ports);
-    console.log(data);
+    console.log("onMessage", ev.ports);
+    console.log("onMessage", data);
   },
   sendMessage: (msg) => {
     app.SW.postMessage(msg);

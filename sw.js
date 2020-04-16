@@ -1,6 +1,6 @@
 'use strict';
-let staticName = `static-cache-1`;
-let dynamicName = 'dynamic-cache-2';
+let staticName = `static-cache-12`;
+let dynamicName = 'dynamic-cache-12';
 let listOfStaticFiles = [
   '/',
   '/index.html',
@@ -49,12 +49,13 @@ function onActivate(ev) {
           .filter((key) => key !== staticName && key !== dynamicName)
           .map((key) => caches.delete(key))
       );
-    })
+    }) 
   );
   console.log(`Service Worker activated`);
 }
 
 function onFetch(ev) {
+  console.log(ev)
   //the webpage has asked for a resource
   //ev.request is the request for the resource
   console.log(`Webpage asked for ${ev.request.url}`);
@@ -79,12 +80,13 @@ function onFetch(ev) {
                     ev.request.method == 'GET')
                 ) {
                   //cache the request if it does NOT come from our API
-                  //OR it comes from our API and uses 'GET'
+                  //OR it comes from our API and uses 'GET'.
+                  cache.put(ev.request.url, fetchRes.clone());
                   console.log('PUTTING IN DYNAMIC', ev.request.url);
                 }
 
                 //need to use clone if we are going to return the file to the browser
-                cache.put(ev.request.url, fetchRes.clone());
+                
                 //check the headers for a content-type for custom responses
                 console.log('HEADERS', fetchRes.headers);
                 return fetchRes;
@@ -102,12 +104,12 @@ function onFetch(ev) {
         console.warn(err); //failed to fetch
         let url = new URL(ev.request.url);
         console.log(url);
-        if (url.hostname == 'picsum.photos') {
-          //return our image with id 1 from our static cache if we are offline
-          return caches.match('https://picsum.photos/id/1/300/300');
-        }
+        // if (url.hostname == 'picsum.photos') {
+        //   //return our image with id 1 from our static cache if we are offline
+        //   return caches.match('https://picsum.photos/id/1/300/300');
+        // }
         if (url.pathname.indexOf('.html') > -1) {
-          return caches.match('/404.html');
+          return caches.match('/pages/404.html');
         }
         return caches.match('/index.html');
         //handle other stuff...

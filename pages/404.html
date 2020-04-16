@@ -20,15 +20,23 @@
     <!-- ios support -->
     <link rel="apple-touch-icon" href="/img/icon-96x96.png" />
     <meta name="apple-mobile-web-app-status-bar" content="#fa79a7" />
+    <link rel="stylesheet" href="/css/app.css">
   </head>
   <body>
-    <div class="navbar-fixed">
-      <nav>
-        <div class="nav-wrapper">
-          <a href="/">HOME</a> | <a href="nowhere.html">NOT AVAILABLE</a>
-        </div>
-      </nav>
-    </div>
+    <header>
+      <div class="navbar-fixed" id="navbar"><!-- nav bar -->
+        <nav role="navigation">
+          <div class="nav-wrapper">
+            <a  href="../index.html" class="left"><i class="material-icons prefix back-btn">arrow_back</i></sa>
+            <a href="#" class="brand-logo"><img id="giftr-icon" src="../img/icon-192x192.png" alt=""><span id="logo-text">Giftr</span></a>
+            <!-- <h4 class="nav-mobile left">Giftr</h4> -->
+            <ul id="nav-mobile" class="right">
+              <!-- <li id="logOut" ><a href="/">logOut</a></li> -->
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
     <main>
       <h1>Error 404</h1>
       <p>Sorry. Unable to load any content at this time.</p>
